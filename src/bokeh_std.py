@@ -5,4 +5,4 @@ def write_page():
     #link = '[Bokeh Server](http://localhost:5000/)'
     #st.markdown(link, unsafe_allow_html=True)
     
-    components.iframe("http://localhost:5006/bok_point_mousemove", height=1000)
+    components.iframe("http://localhost:5006/bok_point_standalone", height=1000)

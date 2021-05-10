@@ -1,7 +1,8 @@
-
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(sys.path[0]),'src'))
 import numpy as np
 import pandas as pd
-import compute_path as cp
+import src.compute_path as cp
 from sklearn import mixture
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
@@ -67,7 +68,7 @@ def get_stations_old(X, Y):
         listy.reverse()
         paths_y.extend(listy)
     return c, paths_x, paths_y, dists
-def get_stations_new(X, Y):   
+def get_stations_new(X, Y, gmm, station_coord):   
     d_lat, d_long = cp.MetersToLatLon(X, Y)
     
     # Prediction
@@ -214,8 +215,6 @@ def make_document(doc):
             temps.append(np.round(pred, 2))
         cl = [sorted(temps).index(x) for x in temps]
         return {'Station':station, 'Distance (m)':dists, 'Temps prédit':temps, 'Classement':cl}
-
-    is_taped = False
     def on_mouse_tap(event):
         global is_taped
         if is_taped:
@@ -224,27 +223,38 @@ def make_document(doc):
             is_taped = True
         
     def on_mouse_mv(event):
+        global is_taped
         if is_taped:
             circled.data_source.data['x_utm'] = [event.x]
             circled.data_source.data['y_utm'] = [event.y]
-            stations_select, line_x, line_y, dists = get_stations_new(event.x, event.y)
+            stations_select, line_x, line_y, dists = get_stations_new(event.x, event.y, gmm, station_coord)
             prediction = get_stations_data(stations_select, dists)
             circled_stations.data_source.data = {'x_utm':station_coord[stations_select, 2], 'y_utm':station_coord[stations_select, 3]}
             paths_stations.data_source.data = {'x':line_x, 'y':line_y}
             data_table.source.data = prediction
             data_table.update()
             text_row.value = str(event.x) + ' ' + str(event.y)
+    global is_taped
+    is_taped = False
+    
 
     p.on_event(Tap, on_mouse_tap)
     p.on_event(MouseMove, on_mouse_mv)
 
     #plots = layout([p, Column(data_table, style)], [text_row])
     plots = layout([[p, Column(data_table, style)]])
-    doc.title('London Fever : Outil de prédiction')
+    #doc.title('London Fever : Outil de prédiction')
     doc.add_root(plots)
     
  
-def exec_bok_serv():
-    apps = {'/': Application(FunctionHandler(make_document))}
-    server = Server(apps, port=5000)
-    server.start()
+# Setting num_procs here means we can't touch the IOLoop before now, we must
+# let Server handle that. If you need to explicitly handle IOLoops then you
+# will need to use the lower level BaseServer class.
+server = Server({'/': make_document}, num_procs=1)
+server.start()
+
+if __name__ == '__main__':
+    print('Opening Bokeh application on http://localhost:5006/')
+
+    server.io_loop.add_callback(server.show, "/")
+    server.io_loop.start()
