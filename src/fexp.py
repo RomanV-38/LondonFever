@@ -41,8 +41,43 @@ def write_page_FR():
         img = Image.open("figures/time_year_line.png")
         st.image(img, width = 600, caption = "Temps d'intervention moyen (vert) et son écart type(bleu) par années")
         st.markdown(s12, unsafe_allow_html=True)
+
+def write_page_ENG():
+    s1 = """
+        <div style="text-align: center; font-size: 25px"> <b> Response time general analysis <br><br>
+        </div>
+        """
+    s11 = """
+        <div style=" font-size: 15px"> 
+        As shown, there is a strong variation in the average response time between <b> 10 a.m. and 9 p.m. </b>. 
+        <br> It can logically be attributed to an overactivity of the rescue services during this time slot,
+        where the majority of Londoners go about their business. <br>
+        We also observe a sharp increase in response times around <b> 4 a.m.</b>. 
+        We can infer that interventions in the middle of the night require a longer reaction time from the rescue services.
+        </div>
+        """
+        
+    s12 = """
+        <div style=" font-size: 15px"> 
+        The evolution of the average response time per year also shows interesting variations.
+        We can see between <b> 2013 </b> and <b> 2016 </b> an increase in response time, with a
+        significant drop in 2017 which <b> stabilized below 330 seconds </b>. <br>
+        It is very likely that this phenomenon reflects <b> measures to reorganize the
+        LFB </b> following the <b> reform </b> initiated in <b> 2013 </b>. <br>
+        During this reform, the LFB <b> closed several stations </b> in the London metropolis, which suggests an evolution in the allocation of interventions.
+        </div>
+        """
     
+
     
-    
-    
-    
+    st.markdown(s1, unsafe_allow_html=True)
+    cols2 = st.beta_columns(2)
+    with cols2[0]:
+        img = Image.open("figures/time_hour_line.png")
+        st.image(img, width = 600, caption = "Average response time (green) and its standard deviation (blue) per hours")
+        st.markdown(s11, unsafe_allow_html=True)
+        
+    with cols2[1]:
+        img = Image.open("figures/time_year_line.png")
+        st.image(img, width = 600, caption = "Average response time (green) and its standard deviation (blue) per years")
+        st.markdown(s12, unsafe_allow_html=True)
