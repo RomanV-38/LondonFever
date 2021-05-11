@@ -8,14 +8,20 @@ import analyse
 import pickle
 import rasters_drawn
 
-PAGES = {
+PAGES_FR = {
     "Introduction"             : intro,
     "Exploration des données"  : analyse,
     "Affichage dynamique"      : rasters_drawn,
     "PDF"                      : pdf_reader,
     "Outil de prédiction"      : bokeh_std,
     }
-
+PAGES_EN = {
+    "Introduction"             : intro,
+    "Data Exploration"  : analyse,
+    "Dynamical Display"      : rasters_drawn,
+    "PDF"                      : pdf_reader,
+    "Prediction tool"      : bokeh_std,
+    }
 st.set_page_config(layout="wide")
 
 def main():
@@ -25,8 +31,8 @@ def main():
                           
     if lang=='Français':
         st.sidebar.title("Navigation")
-        selection = st.sidebar.radio("Go to", list(PAGES.keys()))
-        page = PAGES[selection]
+        selection = st.sidebar.radio("Go to", list(PAGES_FR.keys()))
+        page = PAGES_FR[selection]
         page.write_page_FR()
         st.sidebar.title("Contribute")
         st.sidebar.info("London Fever : analyse des temps d'intervention de la LFB"
@@ -47,8 +53,8 @@ def main():
         )
     if lang=='English':
         st.sidebar.title("Navigation")
-        selection = st.sidebar.radio("Go to", list(PAGES.keys()))
-        page = PAGES[selection]
+        selection = st.sidebar.radio("Go to", list(PAGES_EN.keys()))
+        page = PAGES_EN[selection]
         page.write_page_ENG()
         st.sidebar.title("Contribute")
         st.sidebar.info("London Fever : analysing the LFB response time"
