@@ -6,3 +6,10 @@ def write_page_FR():
     #st.markdown(link, unsafe_allow_html=True)
     
     components.iframe("http://localhost:5006/bok_point_standalone", height=1000)
+    
+def write_page_ENG():
+    st.write("This page leads to a Bokeh server more efficient for displaying the prediction app.")
+    #link = '[Bokeh Server](http://localhost:5000/)'
+    #st.markdown(link, unsafe_allow_html=True)
+    
+    components.iframe("http://localhost:5006/bok_point_standalone", height=1000)
