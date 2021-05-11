@@ -62,4 +62,57 @@ def write_page_FR():
             st.markdown(s4, unsafe_allow_html=True)
             st.latex(r'''dist_{ij} = \sqrt{(x_{i_{utm}} - x_{j_{utm}})^2 + (y_{i_{utm}} - y_{j_{utm}})^2}''')
             st.write("\n\n")
-            st.write(r'''Pour $i, j$ chaque lieu d'incident et station de départ de l'intervention.''')          
+            st.write(r'''Pour $i, j$ chaque lieu d'incident et station de départ de l'intervention.''')
+
+def write_page_ENG():  
+    s1 = """
+        <div style="text-align: center; font-size: 25px"> <b> Presentation of the dataset <br><br>
+        </div>
+        """
+    s2 = """<div style="font-size: 15px">
+        The data made available by the <b> LFB </b> are important: when merged the weight just under <b> 1 GB </b>. <br>
+        They are divided, because of their weight, in <b> two sets </b> separating <b> mobilizations </b> and <b> incidents </b>.
+        These datasets are composed of <b> 2,032,480 events </b> covering all the
+        interventions by the rescue services from <b> the beginning of 2009 </b> until the
+        end of <b> January 2021 </b>. Both datasets have <b> 75 individual columns </b>. <br>
+        We have further enriched the dataset by adding the <b> geographic coordinates </b> of
+        stations, the coordinates of the interventions converted from the British system,
+        and the <b> Euclidean distances </b> between the intervening stations and the incidents.
+        After several decisions taken during the exploration and fusion of the dataset,
+        we worked on a final dataset of <b> 1,797,003 entries and 25 variables </b>.
+        Below is an excerpt from the dataset made up of rows taken at random. <br>
+        </div>
+    """
+        
+    s3 = """<div style="font-size: 15px">
+    The dataset contains the coordinates of the interventions according to a Cartesian coordinates system. The problem to calculate distances  is that the reference system used is the 
+    <b> Ordnance Survey National Grid </b>, a repository dating from <b> 1936 specific to Great Britain </b>
+    that we need to project into a universal frame of reference. To convert them to latitude and longitudes,
+    we used the <b> convertbng </b> python library. <br>
+    The coordinates of stations and interventions after 2013 are also available in longitude / latitude format. <br>
+    To calculate the distances, we first had to convert them to <b> Universal Transverse Mercator * (UTM) </b>. <br>
+    For this we used the following formula: <br>
+        </div>
+    """
+    
+    s4 = """<div style="font-size: 15px"> <br>
+        Finally, from the columns stocking <b> coordinates in UTM </b> for stations and incidents,
+        it was possible to calculate the <b> Euclidean distance </b>, in this case the distance as the crow flies, between these two points.
+        <br>
+        The Euclidean distance was calculated from the following formula:
+        <br>
+        </div>
+    """
+    st.markdown(s1, unsafe_allow_html=True)
+    st.dataframe(df)
+    st.markdown(s2, unsafe_allow_html=True)
+    with st.beta_expander("For further explanation on how euclidian distances were calculated"):
+            st.markdown(s3, unsafe_allow_html=True)
+            st.latex(r'''x_{utm} = \text{lon} * (k * \frac{\pi}{180})''')
+            st.write("\n\n")           
+            st.latex(r'''y_{utm} = \log(\tan((90 + \text{lat}) * \frac{\pi}{360})) * k''')
+            st.write(r'''où $k$ = 6378137, the Earth radius un meters.''')
+            st.markdown(s4, unsafe_allow_html=True)
+            st.latex(r'''dist_{ij} = \sqrt{(x_{i_{utm}} - x_{j_{utm}})^2 + (y_{i_{utm}} - y_{j_{utm}})^2}''')
+            st.write("\n\n")
+            st.write(r'''For $i, j$ each incident location and intervening station.''')            

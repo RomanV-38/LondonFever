@@ -35,3 +35,37 @@ def write_page_FR():
         st.markdown(s_title2, unsafe_allow_html=True)
         st.image(img, width = 500, caption = "")
     st.markdown(s_intro, unsafe_allow_html=True)
+
+
+def write_page_ENG():
+    s_title1 = """
+    <div style="text-align: center; font-size: 40px;"> <b> London Fever </b> <br>
+    </div>
+    """
+    s_title2 = """
+    <div style="text-align: center; font-size: 25px;"> <b> London's rescue services response time </b> <br>
+    </div>
+    """
+    
+    s_intro = """
+    <div style="font-size: 17px;">
+    The <b>London Fire Brigade</b> (LFB) and it's 102 fire station provide rescue services all across the London urban area.
+    <br>
+    On average, the LFB mobilise a little over <b>150.000 times</b> per year, on incidents of diverse nature (fire, car-crash, etc)
+    <br>
+    The response time of rescue services is one of the major factors in mitigating damages to people and equipments.
+    <br>
+    For this reason, maintaining a first aid response time below <b> 360 seconds </b> is one of the main objectives of the LFB.
+    <br>
+    For this project we will take a look at the data displayed by the LFB and try to present a prediction model capable of determining <b> the average response time of surrounding stations </b>,
+    to an address in the London urban area.
+    </div>
+    """
+    
+    cols = st.beta_columns(3)
+    img = Image.open("figures/intro.png")
+    with cols[1]:
+        st.markdown(s_title1, unsafe_allow_html=True)
+        st.markdown(s_title2, unsafe_allow_html=True)
+        st.image(img, width = 500, caption = "")
+    st.markdown(s_intro, unsafe_allow_html=True)
