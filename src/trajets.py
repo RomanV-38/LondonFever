@@ -121,7 +121,7 @@ def compute_nodes(sgs, dist_type='euclidean'):
         sg.edges[n0, n1]['distance'] = distance
     nodes = np.array(sg.nodes())
     return nodes, sg'''
-def write_page():
+def write_page_FR():
     s_0 = """
     <div style="text-align: center; font-size: 25px"> <b> Calcul de trajets : les alternatives à la distance euclidienne <br><br>
     </div>

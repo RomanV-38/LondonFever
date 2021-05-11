@@ -7,7 +7,7 @@ def image1():
     source_code1 = Htmldist.read()
     return source_code1
 
-def write_page():
+def write_page_FR():
     s_t = """
     <div style="text-align: center; font-size: 25px"> <b> Outil de visualisation des statistiques de chaque station<br><br>
     </div>

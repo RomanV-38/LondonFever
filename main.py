@@ -27,7 +27,7 @@ def main():
         st.sidebar.title("Navigation")
         selection = st.sidebar.radio("Go to", list(PAGES.keys()))
         page = PAGES[selection]
-        page.write_page()
+        page.write_page_FR()
         st.sidebar.title("Contribute")
         st.sidebar.info("London Fever : analyse des temps d'intervention de la LFB"
             "\n\n"

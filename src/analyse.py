@@ -6,7 +6,7 @@ import flow
 import secexp
 import trajets
 
-def write_page():
+def write_page_FR():
     my_bar = st.progress(0)
     primaryColor = st.get_option("theme.primaryColor")
     s = """

@@ -2,7 +2,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 
-def write_page():
+def write_page_FR():
     s1 = """
         <div style="text-align: center; font-size: 25px"> <br><br><b> Analyse globale du nombre et des distances d'intervention <br><br>
         </div>

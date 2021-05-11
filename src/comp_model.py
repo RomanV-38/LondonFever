@@ -131,7 +131,7 @@ def description():
     On peut également proposer quelles autres stations alentours seraient disposées à intervenir !  
     ''')
 
-def write_page():
+def write_page_FR():
     s1 = """
         <div style="text-align: center; font-size: 25px"> <b> Quelles Stations sont susceptibles d'intervenir sur un lieu d'incident ? <br><br>
         </div>

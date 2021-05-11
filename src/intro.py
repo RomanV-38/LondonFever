@@ -3,7 +3,7 @@ from PIL import Image
 
 
 
-def write_page():
+def write_page_FR():
     s_title1 = """
     <div style="text-align: center; font-size: 40px;"> <b> London Fever </b> <br>
     </div>

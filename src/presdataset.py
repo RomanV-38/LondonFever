@@ -9,7 +9,7 @@ except:
     import pickle5 as pickle
     with open('data/sample.pkl', "rb") as fh:
         df = pickle.load(fh)
-def write_page():  
+def write_page_FR():  
     s1 = """
         <div style="text-align: center; font-size: 25px"> <b> Présentation du jeu de données <br><br>
         </div>

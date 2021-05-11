@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 
-def write_page():
+def write_page_FR():
     s1 = """
         <div style="text-align: center; font-size: 25px"> <b> Analyse globale des temps d'intervention <br><br>
         </div>

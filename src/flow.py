@@ -1,6 +1,6 @@
 import streamlit as st 
 
-def write_page():
+def write_page_FR():
     s_t = """
     <div style="text-align: center; font-size: 25px"> <b> Illustration de la procédure de l'application finale (Onglet Outil de prédiction)
     </div>
