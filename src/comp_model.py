@@ -155,3 +155,46 @@ def write_page_FR():
     </div>
     """
     st.markdown(s2, unsafe_allow_html=True)
+    
+def description2():
+    
+    st.markdown('''If we want to be able to predict how much time a station would take to get to a point on the map we have several options :''')
+    with st.beta_expander("- Select all stations within a fixed perimeter"):
+        st.markdown('''The station selection could be a source of error. Indeed, the stations of London's center may not have the same range of intervention as the stations on the outskirts. In addition, several criteria are unknown to us and could influence this selection: expressways, preferred routes, topology, etc ...''')
+    with st.beta_expander("- Classify coordinates with stations as labels"):
+        st.markdown('''On the other hand, if the classification of the data is based on the history of interventions, the model should capture many characteristics with respect to the movement of firefighters, and therefore return which station should intervene on a certain location.''')                
+    st.markdown('''**K means**  
+    Typically, we approach this kind of classification with K means models: we then try to attribute to each incident coordinates a center which would correspond to an intervening station.
+    The main drawback is that the stations were able to intervene at widely varying distances.
+    As  we can see on the interactive graph, the K means have an average score (45% success), 
+    and only when the data is trained with a truncated destination (portion of the station-incident distance).''')
+    st.markdown('''** Gaussian mixtures**
+    The *Gaussian Mixture Model* (GMM) are a generalization of the K means: In addition to the coordinates of the centers, the model will estimate a covariance for each of the stations.
+    We then obtain for each point the probability of "belonging" to each station.
+    It is then possible to check, among the predicted stations, whether the station which actually intervened is present.
+    We can also suggest which other nearby stations would be willing to intervene!  
+    ''')
+def write_page_ENG():
+    s1 = """
+        <div style="text-align: center; font-size: 25px"> <b> Which Stations are most likely to intervene on an incident ? <br><br>
+        </div>
+        """
+    st.markdown(s1, unsafe_allow_html=True)
+    cols = st.beta_columns((1, 1))
+    with cols[0]:
+        hide_full_screen = '''
+        <style>
+        .element-container:nth-child(3) .overlayBtn {visibility: hidden;}
+        .element-container:nth-child(12) .overlayBtn {visibility: hidden;}
+        </style>
+        '''
+        st.markdown(hide_full_screen, unsafe_allow_html=True) 
+        make_figure()
+    with cols[1]:
+        description2()
+    s2 = """
+    <div style="text-align: center"> <b> We can see when we modify the graph that the Gaussian Mixture Model is more efficient with non-truncated data <br>
+     This model appears more suitable for identifying which stations would be likely to intervene.
+    </div>
+    """
+    st.markdown(s2, unsafe_allow_html=True)
