@@ -10,8 +10,8 @@ shortest_p = nx.shortest_path_length(G,
                                      nearestnode_dest,
                                      weight='length')'''
 pbf_import = '''
-# Initialise avec une bounding box
-# Greater London pbf doit être récupéré sur le site OSM
+# Initialise with a bounding box
+# Greater London pbf can be downloard don the OSM website
 from pyrosm import OSM, get_data
 # Define a square around the origin node
 # Or get the min-max of (origin_node, destination_node)
@@ -26,9 +26,9 @@ nodes, edges = osm.get_network(network_type='driving', nodes=True)
 G = osm.to_graph(nodes, edges, graph_type="networkx")'''
 
 osm_import = '''
-# Initialise avec une bounding box
-# Le fichier OSM est trop important pour construire le graph en entier
-# La fonction envoies une requête au serveur OSM
+# Initialise with a bounding box
+# The OSM file is too bug to build a complete graph
+# The function directly sent a request to an OSM server
 import osmnx as ox
 # Get graph 20km around origin_node,
 # here x, y are lon and lat coordinates
@@ -38,8 +38,8 @@ G = ox.graph_from_point((origin_node_lat,
                          network_type='drive')'''
                          
 shp_import = '''
-# Initialise tout le graph
-# Le fichier SHP doit être récupéré sur le site OSM
+# Initialise the whole graph
+# The SHP file must be downloaded from the OSM website
 import networkx as nx
 g = nx.read_shp('SHAPEFILE_REGION_OF_INTEREST.shp')
 sgs = list(nx.connected_component_subgraphs(g.to_undirected()))
@@ -48,8 +48,7 @@ nodes, sg = cp.compute_nodes(sgs, dist_type='euclidean')'''
 shp_traj = '''
 pos0 = (origin_node_lat, origin_node_lon)
 pos1 = (destination_node_lat, destination_node_lon)
-# On identifie les noeuds les plus proches 
-# des coordonnées origine et destination
+# We identify the nodes closest to the origin and the destination
 pos0_i = np.argmin(
     np.sum((nodes[:, ::-1] - pos0)**2, axis=1))
 pos1_i = np.argmin(
@@ -82,15 +81,15 @@ def geocalc(lat0, lon0, lat1, lon1):
 def wgs84_to_web_mercator(lat, lon):
     """
     from https://stackoverflow.com/questions/57178783/how-to-plot-latitude-and-longitude-in-bokeh
-    Cette fonction calcule les coordonnées
-    UTM (mercator) à partir de la longitude et de la latitude
-    df : le dataframe où se trouvent les données à convertir
-    lon : nom de la colonne pour les longitudes
-    lat : nom de la colonne pour les latitudes
-    return : retourne le dataframe en y ajoutant les colonnes 
-    pour les coordonnées x_utm et y_utm
+    This function calculate the UTM (mercator) coordinates 
+    from longitudes and latitudes
+    df : the dataframe stocking the data to be converted
+    lon : the column name for longitudes
+    lat : the column name for latitudes
+    return : return the dataframe while adding columns 
+    for coordinates in x_utm et y_utm
     """
-    k = 6378137 # rayon de la Terre en mètres
+    k = 6378137 # Earth radius in meters
     x = lon * (k * np.pi/180.0)
     y = np.log(np.tan((90 + lat) * np.pi/360.0)) * k
     return x, y
@@ -121,6 +120,7 @@ def compute_nodes(sgs, dist_type='euclidean'):
         sg.edges[n0, n1]['distance'] = distance
     nodes = np.array(sg.nodes())
     return nodes, sg'''
+
 def write_page_FR():
     s_0 = """
     <div style="text-align: center; font-size: 25px"> <b> Calcul de trajets : les alternatives à la distance euclidienne <br><br>
@@ -160,4 +160,44 @@ def write_page_FR():
     st.markdown(s_t2, unsafe_allow_html=True)
     
     with st.beta_expander('Fonctions utilitaires complémentaires pour SHP'):
+        st.code(shp_comp, language='python')   
+
+  
+def write_page_ENG():
+    s_0 = """
+    <div style="text-align: center; font-size: 25px"> <b> Calculating distance : alternatives to euclidian distance <br><br>
+    </div>
+    """
+    s_t = """
+    <div style="text-align: center"> <b> Calculating the traveling distance is an important step toward estimating the real distances rescue services have to travel to intervene. <br>
+    These distances can be calculated using different means described here : 
+    </div>
+    """
+    s_t2 = """
+    <div style="text-align: center"> <b> Given the performance comparison, we calculated the station-incident journeys of the Dataset using the PBF method.
+    </div>
+    """
+    st.markdown(s_0, unsafe_allow_html=True)
+    st.markdown(s_t, unsafe_allow_html=True)
+    cols = st.beta_columns(2)
+    with cols[0]:
+        st.image('figures/trajets.png')
+        
+    with cols[1]:
+    
+        st.write('The most time consuming part of the calculation is in the construction of the Graph, from which we will estimate the shortest path.')
+        st.write('Once the Graph is built, we can directly estimate the travel distance with NetworkX')
+        with st.beta_expander('PBF Method'):
+            st.code(pbf_import, language='python')
+        with st.beta_expander('OSMNX Method'):
+            st.code(osm_import, language='python')
+        with st.beta_expander('SHP Method'):
+            st.code(shp_import, language='python')
+        with st.beta_expander('calculating distances with PBF and OSM'):
+            st.code(base_ox, language='python')
+        with st.beta_expander('calculating distances with SHP'):
+            st.code(shp_traj, language='python')
+    st.markdown(s_t2, unsafe_allow_html=True)
+    
+    with st.beta_expander('Additional utility functions for SHP'):
         st.code(shp_comp, language='python')
