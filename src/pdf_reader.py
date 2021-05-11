@@ -9,4 +9,12 @@ def write_page_FR():
         pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="1000" height="1000" type="application/pdf">' 
         st.markdown(pdf_display, unsafe_allow_html=True)
         
-        
+
+def write_page_ENG():
+    st.markdown("Not available in english for the time being")
+#    pdf_file = 'doc/Projet_LFB_London_Fever_ENG.pdf'
+#   with open(pdf_file,"rb") as f:
+#        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+#        pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="1000" height="1000" type="application/pdf">' 
+#        st.markdown(pdf_display, unsafe_allow_html=True)
+#       
