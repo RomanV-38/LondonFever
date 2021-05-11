@@ -49,9 +49,9 @@ def main():
         st.sidebar.title("Navigation")
         selection = st.sidebar.radio("Go to", list(PAGES.keys()))
         page = PAGES[selection]
-        page.write_page()
-        st.sidebar.title("Changement ok")
-        st.sidebar.info("London Fever : analyse des temps d'intervention de la LFB"
+        page.write_page_ENG()
+        st.sidebar.title("Contribute")
+        st.sidebar.info("London Fever : analysing the LFB response time"
             "\n\n"
             "Participants:"
             "\n\n"
@@ -63,9 +63,9 @@ def main():
             )
         st.sidebar.title("About")
         st.sidebar.info(
-            "Projet de valiation de la formation Data Analyst - Promotion Bootcamp Mars 2021"
+            "Data Analyst Bootcamp project - Mars 2021 session"
             "\n\n"
-            "Réalisé sous la supervision de Greg TORDJMAN [linkedin](https://fr.linkedin.com/in/greg-tordjman)"
+            "Realised with the supervision of Greg TORDJMAN [linkedin](https://fr.linkedin.com/in/greg-tordjman)"
         )
 
 if __name__ == "__main__":
